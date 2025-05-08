@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Diffie-Hellman Key Exchange</title>
+</head>
+<body>
+  <h2>Diffie-Hellman Key Exchange</h2>
+
+  <p>Enter your private key (Alice's):</p>
+  <input type="number" id="alicePrivateKey" />
+  <button onclick="performKeyExchange()">Generate Shared Key</button>
+
+  <h3>Results:</h3>
+  <p>Prime (p):<span id="pVal"></span></p>
+  <p>Generator (g): <span id="gVal"></span></p>
+  <p>Alice's Public Key: <span id="alicePub"></span></p>
+  <p>Bob's Private Key: <span id="bobPriv"></span></p>
+  <p>Bob's Public Key: <span id="bobPub"></span></p>
+  <p>Shared Secret (Alice): <span id="sharedA"></span></p>
+  <p>Shared Secret (Bob): <span id="sharedB"></span></p>
+
+  <script>
+    function performKeyExchange() {
+      // Prime number (p) and primitive root (g)
+      const p = 23;
+      const g = 5;
+
+      // Get Alice's private key
+      const a = parseInt(document.getElementById("alicePrivateKey").value);
+
+      // Generate Alice's public key: A = g^a mod p
+      const A = Math.pow(g, a) % p;
+
+      // Simulate Bob's private key
+      const b = Math.floor(Math.random() * 10) + 1; // random private key for Bob
+      const B = Math.pow(g, b) % p; // Bob's public key
+
+      // Shared secret key calculation
+      const sharedKeyAlice = Math.pow(B, a) % p;
+      const sharedKeyBob = Math.pow(A, b) % p;
+
+      // Display results
+      document.getElementById("pVal").innerText = p;
+      document.getElementById("gVal").innerText = g;
+      document.getElementById("alicePub").innerText = A;
+      document.getElementById("bobPriv").innerText = b;
+      document.getElementById("bobPub").innerText = B;
+      document.getElementById("sharedA").innerText = sharedKeyAlice;
+      document.getElementById("sharedB").innerText = sharedKeyBob;
+    }
+  </script>
+</body>
+</html>
